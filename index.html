@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>fun with vue</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <style>
+            .box {
+                background-color: red;
+                height: 200px;
+                width: 200px;
+            }
+            .box.one {
+                background-color: rgb(245, 79, 2);
+            }
+            .box.two {
+                background-color: green;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <!-- v-cloak directive used to hide rendering until the whole application is ready-->
+        <div id="app" v-cloak>
+            {{ greeting }}
+            <!-- two way data binding using v-model -->
+            <!-- @keyup is an event, listens to keypress, you can use any key code associated with the keys on the keyboard eg enter code is 13 -->
+            <input @keyup.enter.backspace="greet" v-model="greeting" />
+            <hr />
+            <!-- v-on event handler, can be replaced with @ -->
+            <button @click="toggleBox" >Red light! Green Light!</button>
+            <hr />
+            <!-- v-show used in a similar way as v-if, uses boolean. however, the div is loaded to the dom and it stays there -->
+            <div v-if="isVisible" class="box"></div>
+            <!-- v-if, v-else-if takes arguments, v-esle does not take any arguments -->
+            <!-- <div v-else-if="isVisible2" class="box one"></div> -->
+            <div v-else class="box two"></div>
+        </div>
+        <script src="https://unpkg.com/vue@3"></script>
+        <script>
+            //creating a vue instance
+            let app = Vue.createApp({
+                data: function() {
+                    return{
+                        greeting: 'Hello, anything you put in this box -> will be shown here, if you press backspace, it will be logged to the console hah',
+                        isVisible: false,
+                        isVisible2: false,
+                    }
+                },
+                methods: {
+                    toggleBox() {
+                        this.isVisible = !this.isVisible
+                    },
+                    greet() {
+                        console.log(this.greeting)
+                    }
+                }
+            })
+            app.mount('#app')
+        </script>
+    </body>
+</html>
